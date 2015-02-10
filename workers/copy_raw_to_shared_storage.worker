@@ -33,7 +33,7 @@ watch ENV['LANDFALL_RAW_PATH'] do
           facility: 'uafgina',
           pass: {
             arrived_at: pass_time,
-            filename: File.basename(file)
+            name: pass_id
           }
         }
       }
