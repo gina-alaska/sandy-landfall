@@ -1,0 +1,1 @@
+conveyor: bundle exec conveyor

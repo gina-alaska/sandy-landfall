@@ -1,0 +1,26 @@
+require 'httparty'
+require 'fileutils'
+
+watch ENV['LANDFALL_RAW_PATH'] do
+  match extension md5 do |matched|
+    return unless File.basename(matched).start_with?('npp')
+    #npp.15017.1306.md5
+    #npp.15017.1306.zero.gz
+
+    path = File.dirname(matched)
+    pass_id = File.basename(matched, '.md5')
+    pass_files = Dir.glob(File.join(path, "pass_id*")) - matched
+
+    pass_time = Time.strptime(pass_id, "npp.%Y%j.%H%M")
+    year = pass_time.year
+    month = pass_time.month.to_s.rjust(2, '0')
+    output_path = File.join(ENV['LANDFALL_SHARED_PATH'], 'snpp', 'raw', year, month, pass_id)
+
+    FileUtils.mkdir_p(output_path)
+    pass_files.each do |file|
+      output_file =  File.join(output_path, File.basename(file))
+
+      FileUtils.copy(file, output_file) unless File.exists?(output_file)
+    end
+  end
+end

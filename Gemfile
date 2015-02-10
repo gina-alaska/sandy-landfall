@@ -3,4 +3,4 @@ source "https://rubygems.org"
 
 gem 'gina-conveyor'
 gem 'httparty'
-
+gem 'foreman'

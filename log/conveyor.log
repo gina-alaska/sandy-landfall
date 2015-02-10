@@ -1,0 +1,5 @@
+[2015-02-10 09:18:30 -0900] [Foreman::info] Starting Conveyor v0.2.3
+[2015-02-10 09:18:30 -0900] [Foreman::info] Loading workers from /Users/scott/workspace/sandy/sandy-landfall/.workers
+[2015-02-10 09:18:30 -0900] [Foreman::info] Waiting for files
+[2015-02-10 09:18:30 -0900] [Foreman::info] Press CTRL-C to stop
+[2015-02-10 09:18:30 -0900] [Foreman::info] Starting websocket on 0.0.0.0:9876
