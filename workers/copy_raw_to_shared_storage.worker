@@ -12,7 +12,8 @@ watch ENV['LANDFALL_RAW_PATH'] do
     pass_id = File.basename(matched, '.md5')
     pass_files = Dir.glob(File.join(path, "#{pass_id}*")) - Array(matched)
 
-    pass_time = Time.strptime(pass_id, "npp.%Y%j.%H%M")
+    pass_time = Time.strptime(pass_id, "npp.%y%j.%H%M")
+
     year = pass_time.year.to_s
     month = pass_time.month.to_s.rjust(2, '0')
     output_path = File.join(ENV['LANDFALL_SHARED_PATH'], 'snpp', 'raw', year, month, pass_id)
@@ -22,7 +23,7 @@ watch ENV['LANDFALL_RAW_PATH'] do
     pass_files.each do |file|
       output_file = File.join(output_path, File.basename(file))
       next if File.exists?(output_file)
-      
+
       FileUtils.copy(file, output_file)
 
       controller = "#{ENV['SANDY_CONTROLLER']}/processing/pass"
