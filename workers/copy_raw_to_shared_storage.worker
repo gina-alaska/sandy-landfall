@@ -32,7 +32,7 @@ watch ENV['LANDFALL_RAW_PATH'] do
           satellite: 'snpp',
           facility: 'uafgina',
           pass: {
-            arrived_at: pass_time,
+            acquired_at: pass_time,
             name: pass_id
           }
         }
