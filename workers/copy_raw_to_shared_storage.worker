@@ -1,5 +1,6 @@
 require 'httparty'
 require 'fileutils'
+require 'date'
 
 watch ENV['LANDFALL_RAW_PATH'] do
   match extension md5 do |matched|
@@ -12,7 +13,7 @@ watch ENV['LANDFALL_RAW_PATH'] do
     pass_id = File.basename(matched, '.md5')
     pass_files = Dir.glob(File.join(path, "#{pass_id}*")) - Array(matched)
 
-    pass_time = Time.strptime(pass_id, "npp.%y%j.%H%M")
+    pass_time = DateTime.strptime(pass_id, "npp.%y%j.%H%M")
 
     year = pass_time.year.to_s
     month = pass_time.month.to_s.rjust(2, '0')
