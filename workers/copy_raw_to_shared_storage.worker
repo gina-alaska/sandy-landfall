@@ -27,7 +27,7 @@ watch ENV['LANDFALL_RAW_PATH'] do
 
       FileUtils.copy(file, output_file)
 
-      controller = "#{ENV['SANDY_CONTROLLER']}/processing/pass"
+      controller = "http://#{ENV['SANDY_CONTROLLER']}/processing/pass"
       options = {
         body: {
           satellite: 'snpp',
