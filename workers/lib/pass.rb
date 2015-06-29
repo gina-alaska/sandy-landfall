@@ -22,7 +22,7 @@ class Pass
     # Delete any files if they exist?  Or fail if it exists
     # Return false if either of the above is true
     # Return True if the copy is successful
-    File.mkdir_p(cache_path) unless File.exists? cache_path
+    FileUtils.mkdir_p(cache_path) unless File.exists? cache_path
     FileUtils.copy @file, cache_path
     # TODO:  Verify copied file matches md5
   end
@@ -62,11 +62,11 @@ class Pass
   end
 
   def year
-    satellite.acquired_at.year
+    satellite.acquired_at.year.to_s
   end
 
   def month
-    satellite.acquired_at.month
+    satellite.acquired_at.month.to_s.rjust(2,'0')
   end
 
   class Satellite
