@@ -54,7 +54,7 @@ class Pass
   end
 
   def cache_path
-    File.join(ENV['LANDFALL_SHARED_PATH'], facility, satellite.name, 'raw', year, month, id)
+    File.join(ENV['LANDFALL_SHARED_PATH'], facility, satellite.name, 'raw', year, month, @id)
   end
 
   def relative_path
