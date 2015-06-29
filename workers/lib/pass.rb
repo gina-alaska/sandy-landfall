@@ -7,7 +7,7 @@ class Pass
   def initialize md5
     @md5 = Pathname.new(md5)
     @id = @md5.basename('.md5').to_s
-    files = Dir.glob(File.join(@md5.dirname, "#{@id}*")).reject{|f| File.basename(f) == @md5.basename }
+    files = Dir.glob(File.join(@md5.dirname, "#{@id}*")).reject{|f| File.basename(f) == @md5.basename.to_s }
     @file = Pathname.new(files.first)
   end
 
