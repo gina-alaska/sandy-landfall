@@ -1,4 +1,4 @@
-require './lib/pass.rb'
+require File.join(File.expand_path('../workers/lib', __FILE__), 'pass.rb')
 
 watch ENV['LANDFALL_RAW_PATH'] do
   match extension md5 do |matched|
