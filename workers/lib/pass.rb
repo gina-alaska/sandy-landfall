@@ -25,7 +25,7 @@ class Pass
     FileUtils.mkdir_p(cache_path) unless File.exists? cache_path
     FileUtils.copy @file, cache_path
     # TODO:  Verify copied file matches md5
-    true 
+    true
   end
 
   private
@@ -47,7 +47,7 @@ class Pass
   end
 
   def facility
-    @facility ||= relative_path.split.first
+    @facility ||= relative_path.split.first.to_s[1..-1]
   end
 
   def controller
