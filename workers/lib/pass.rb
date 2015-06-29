@@ -25,6 +25,7 @@ class Pass
     FileUtils.mkdir_p(cache_path) unless File.exists? cache_path
     FileUtils.copy @file, cache_path
     # TODO:  Verify copied file matches md5
+    true 
   end
 
   private
