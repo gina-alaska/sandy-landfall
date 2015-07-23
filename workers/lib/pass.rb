@@ -84,9 +84,9 @@ class Pass
         when /^npp/; ['snpp', parse_date(filename, "npp.%y%j.%H%M")]
         when /^a1/; ['aqua', parse_date(filename, "a1.%y%j.%H%M")]
         when /^t1/; ['terra', parse_date(filename, "t1.%y%j.%H%M")]
-        when /^K01/; ['noaa15', parse_date(filename, "K01%y%m%d%H%M%S")]
-        when /^N01/; ['noaa18', parse_date(filename, "N01%y%m%d%H%M%S")]
-        when /^Np1/; ['noaa19', parse_date(filename, "Np1%y%m%d%H%M%S")]
+        when /^n15/; ['noaa15', parse_date(filename, "n15.%y%j.%H%M")]
+        when /^n18/; ['noaa18', parse_date(filename, "n18.%y%j.%H%M")]
+        when /^n19/; ['noaa19', parse_date(filename, "n19.%y%j.%H%M")]
       # TODO:  DMSP, METOP
         else ['unknown', Time.now]
       end
