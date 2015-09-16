@@ -88,7 +88,7 @@ class Pass
       when %r{^aqua.\d{8}.\d{4}};     ['aqua', parse_date(name, "aqua.%y%j.%H%M")]
       when %r{^t1.\d{5}.\d{4}};       ['terra', parse_date(name, "t1.%y%j.%H%M")]
       when %r{^terra.\d{8}.\d{4}};    ['terra', parse_date(name, "terra.%y%j.%H%M")]
-      when %r{^tp\d{13}.METOP-B.dat}; ['metop-b', parse_date(name, "tp%Y%j%H%M")]
+      when %r{^tp\d{13}.metop-b.dat}; ['metop-b', parse_date(name, "tp%Y%j%H%M")]
       when %r{^n15};                  ['noaa15', parse_date(name, "n15.%y%j.%H%M")]
       when %r{^n18};                  ['noaa18', parse_date(name, "n18.%y%j.%H%M")]
       when %r{^n19};                  ['noaa19', parse_date(name, "n19.%y%j.%H%M")]
