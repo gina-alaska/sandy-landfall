@@ -80,15 +80,20 @@ class Pass
 
     private
     def parse_name(filename)
-      case filename
-        when /^npp/; ['snpp', parse_date(filename, "npp.%y%j.%H%M")]
-        when /^a1/; ['aqua', parse_date(filename, "a1.%y%j.%H%M")]
-        when /^t1/; ['terra', parse_date(filename, "t1.%y%j.%H%M")]
-        when /^n15/; ['noaa15', parse_date(filename, "n15.%y%j.%H%M")]
-        when /^n18/; ['noaa18', parse_date(filename, "n18.%y%j.%H%M")]
-        when /^n19/; ['noaa19', parse_date(filename, "n19.%y%j.%H%M")]
-      # TODO:  DMSP, METOP
-        else ['unknown', Time.now]
+      name = filename.downcase
+      case name
+      when %r{^npp.\d{5}.\d{4}};        ['snpp', parse_date(name, "npp.%y%j.%H%M")]
+      when %r{^npp.\d{8}.\d{4}};        ['snpp', parse_date(name, "npp.%Y%m%d.%H%M")]
+      when %r{^a1.\d{5}.\d{4}};         ['aqua', parse_date(name, "a1.%y%j.%H%M")]
+      when %r{^aqua.\d{8}.\d{4}};       ['aqua', parse_date(name, "aqua.%y%j.%H%M")]
+      when %r{^t1.\d{5}.\d{4}};         ['terra', parse_date(name, "t1.%y%j.%H%M")]
+      when %r{^terra.\d{8}.\d{4}};      ['terra', parse_date(name, "terra.%y%j.%H%M")]
+      when %r{^tp.\d{13}.METOP-B.dat};  ['metop-b', parse_date(name, "tp.%Y%j%H%M")]
+      when %r{^n15};                    ['noaa15', parse_date(name, "n15.%y%j.%H%M")]
+      when %r{^n18};                    ['noaa18', parse_date(name, "n18.%y%j.%H%M")]
+      when %r{^n19};                    ['noaa19', parse_date(name, "n19.%y%j.%H%M")]
+    # TODO:  DMSP
+      else ['unknown', Time.now]
       end
     end
 
