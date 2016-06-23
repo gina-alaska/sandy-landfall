@@ -26,7 +26,6 @@ class Pass
     FileUtils.copy @file, cache_path
     if satellite.name == "metop-b"
       system("gunzip #{cache_path}/#{@file.basename.to_s}")
-      @id = File.basename(@id,'.gz')
     end
     # TODO:  Verify copied file matches md5
     true
