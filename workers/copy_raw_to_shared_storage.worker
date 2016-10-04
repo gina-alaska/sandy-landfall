@@ -1,5 +1,4 @@
-#require File.join(File.expand_path('../workers/lib', __FILE__), 'pass.rb')
-require '/home/processing/conveyor/workers/lib/pass.rb'
+require File.expand_path('../workers/lib/pass.rb', __FILE__) unless defined? Pass
 
 watch ENV['LANDFALL_RAW_PATH'] do
   match extension md5 do |matched|
