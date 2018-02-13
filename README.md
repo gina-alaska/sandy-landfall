@@ -12,7 +12,7 @@ This package is managed as a [habitat](https://habitat.sh) package. After an upd
 
 ```
 hab pkg build .
-hab pkg upload
+hab pkg upload results/(the newly built package).art
 ```
 
 That will put it up in [bldr.habitat.sh - /uafgina/sandy-landfall](https://bldr.habitat.sh/#/pkgs/uafgina/sandy-landfall/latest) in the `unstable` channel. You can promote it from `unstable` to `stable` in the web GUI or command line if needed. See the [sandy/cookbooks/sandy_app/README.md](https://github.alaska.edu/gina-cookbooks/sandy/blob/master/cookbooks/sandy_app/README.md) for more details on how it is managed in test and prod.
