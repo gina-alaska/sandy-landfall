@@ -4,6 +4,7 @@ A tool that manages the conveyor for the NRT stack.  This brings in newly captur
 
 This package is installed on the NRT stack's `landfall` system.  This is managed via Chef in the [sandy/cookbooks/sandy_app](https://github.alaska.edu/gina-cookbooks/sandy/tree/master/cookbooks/sandy_app) `recipe[sandy::landfall]`.
 
+Landfall GitHub: [github.com/gina-alaska/sandy-landfall](https://github.com/gina-alaska/sandy-landfall) 
 
 ## building & uploading
 
