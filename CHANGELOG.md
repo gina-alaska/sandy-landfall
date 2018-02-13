@@ -1,4 +1,8 @@
 # CHANGELOG
+## Unreleased
+
+## [1.2.1] - 2018-02-13
+* added noaa20 handling
 
 ## [1.2.0] - 2018-02-12
 * (re)create habitat plan and rev version to 1.2.0

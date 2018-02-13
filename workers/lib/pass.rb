@@ -95,6 +95,7 @@ class Pass
       when %r{^n15};                  ['noaa15', parse_date(name, "n15.%y%j.%H%M")]
       when %r{^n18};                  ['noaa18', parse_date(name, "n18.%y%j.%H%M")]
       when %r{^n19};                  ['noaa19', parse_date(name, "n19.%y%j.%H%M")]
+      when %r{^jpss1.\d{8}.\d{4}};    ['noaa20', parse_date(name, "jpss1.%Y%m%d.%H%M")]
     # TODO:  DMSP
       else ['unknown', Time.now]
       end
