@@ -1,1 +1,6 @@
 results/
+vendor/*
+
+# bundler config
+.bundle
+habitat/results
