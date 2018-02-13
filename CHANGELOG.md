@@ -1,7 +1,10 @@
 # CHANGELOG
 
 ## [1.2.0] - 2018-02-12
-* Recreating habitat stuff to roll out new updates
+* (re)create habitat plan and rev version to 1.2.0
+* Add CHANGELOG.md
+* Update README.md for habitat stuff
+* Remove legacy Proc file
 
 ## [1.1.1] - 2016-10-04
 * Last major version done by Scott MacFarlane
