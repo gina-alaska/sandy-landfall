@@ -17,7 +17,13 @@ class Pass
   end
 
   def cache!
-    return false if File.exists?(File.join(cache_path, @file.basename))
+    path = File.join(cache_path, @file.basename)
+    if File.exists?(File.join(cache_path, @file.basename)) && (File.size?(path) == File.size?(@file))
+	puts("INFO: File seems to be already ingested and online.")
+	puts("INFO: \tSize in gluster: #{File.size?(path)}")
+ 	puts("INFO: \tSize on landfall: #{File.size?(@file)}")
+    	return false 
+    end
     # Create directories unless they exist
     # Delete any files if they exist?  Or fail if it exists
     # Return false if either of the above is true
@@ -92,10 +98,15 @@ class Pass
       when %r{^t1.\d{5}.\d{4}};       ['terra', parse_date(name, "t1.%y%j.%H%M")]
       when %r{^terra.\d{8}.\d{4}};    ['terra', parse_date(name, "terra.%Y%m%d.%H%M")]
       when %r{^tp\d{13}.metop-b.dat}; ['metop-b', parse_date(name, "tp%Y%j%H%M")]
+      when %r{^tp\d{13}.metop-c.dat}; ['metop-c', parse_date(name, "tp%Y%j%H%M")]
       when %r{^n15};                  ['noaa15', parse_date(name, "n15.%y%j.%H%M")]
       when %r{^n18};                  ['noaa18', parse_date(name, "n18.%y%j.%H%M")]
       when %r{^n19};                  ['noaa19', parse_date(name, "n19.%y%j.%H%M")]
+      when %r{^noaa18};               ['noaa18', parse_date(name, "noaa18.%Y%m%d.%H%M")]
+      when %r{^noaa19};               ['noaa19', parse_date(name, "noaa19.%Y%m%d.%H%M")]
       when %r{^jpss1.\d{8}.\d{4}};    ['noaa20', parse_date(name, "jpss1.%Y%m%d.%H%M")]
+      when %r{^j1.\d{5}.\d{4}};       ['noaa20', parse_date(name, "j1.%y%j.%H%M")]
+      when %r{^gcom-w1.\d{8}.\d{4}};  ['gcom-w', parse_date(name, "gcom-w1.%Y%m%d.%H%M")]
     # TODO:  DMSP
       else ['unknown', Time.now]
       end
