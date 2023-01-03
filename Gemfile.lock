@@ -1,11 +1,11 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    httparty (0.13.3)
-      json (~> 1.8)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
-    json (1.8.2)
-    multi_xml (0.5.5)
+    mini_mime (1.1.2)
+    multi_xml (0.6.0)
     rb-readline (0.5.5)
 
 PLATFORMS
