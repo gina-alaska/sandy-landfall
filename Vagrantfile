@@ -7,8 +7,8 @@
 # you're doing.
 Vagrant.configure("2") do |config|
   config.vm.define "build" do |box|
-  	#box.vm.box = "bento/centos-6.9"
-  	box.vm.box = "generic/centos6"
+  	#box.vm.box = "bento/rocky-linux-8"
+	  box.vm.box = "generic/rocky8"
   	box.vm.synced_folder ".", "/home/vagrant/build"
   	box.vm.synced_folder "./gina_builds", "/opt/gina/"
   end

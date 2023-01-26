@@ -7,8 +7,9 @@ echo "Version is " $VERSION
 
 echo "Setting up Conda.."
 
-wget -q https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh
-sh ./Anaconda3-2020.02-Linux-x86_64.sh -b -p $HOME/anaconda
+#wget -q https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh
+wget https://repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh
+sh ./Anaconda3-2022.10-Linux-x86_64.sh -b -p $HOME/anaconda
 . ~/.bashrc
 
  ~/anaconda/bin/conda init
