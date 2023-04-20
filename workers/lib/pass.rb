@@ -31,7 +31,7 @@ class Pass
     FileUtils.mkdir_p(cache_path) unless File.exists? cache_path
     FileUtils.copy @file, cache_path
     if satellite.name == "metop-b"
-      system("gunzip #{cache_path}/#{@file.basename.to_s}")
+      system("gunzip -f #{cache_path}/#{@file.basename.to_s}")
     end
     # TODO:  Verify copied file matches md5
     true
