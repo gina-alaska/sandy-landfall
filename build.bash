@@ -13,11 +13,13 @@ echo "Setting up Conda.."
 rm -rf $INSTALL_LOCATION$LABEL-"$VERSION"
 
 echo "Updating Conda.."
-conda update -n base -c defaults conda
+#conda update -n base -c defaults conda
+conda install -y -n base conda-libmamba-solver
+conda config --set solver libmamba
 
 echo "Starting conda process.."
 conda config --add channels conda-forge
-conda create -y -p $INSTALL_LOCATION$LABEL-"$VERSION" conda-pack gxx_linux-64 openssl ruby=2.3.3
+conda create -y -p $INSTALL_LOCATION$LABEL-"$VERSION" conda-pack gxx_linux-64 ruby=3.3.3
 conda activate $INSTALL_LOCATION$LABEL-"$VERSION"
 
 #echo "Conda setup."
@@ -26,30 +28,17 @@ export GEM_HOME="$INSTALL_LOCATION$LABEL-$VERSION/vendor/bundle"
 export GEM_PATH="$INSTALL_LOCATION$LABEL-$VERSION:$INSTALL_LOCATION$LABEL-$VERSION/vendor/bundle"
 export PATH=$PATH:$INSTALL_LOCATION$LABEL-$VERSION/vendor/bundle/bin
 
-
-
-echo "setting ld library path.."
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_LOCATION$LABEL-$VERSION/lib
-
 echo "Copying $LABEL to build area.."
 cd ~/build 
-cp -vr .conveyor  Gemfile  Gemfile.lock  README.md VERSION  workers start.bash $INSTALL_LOCATION$LABEL-"$VERSION"
+cp -vr Gemfile  Gemfile.lock  README.md VERSION tools $INSTALL_LOCATION$LABEL-"$VERSION"
 
 echo "Installing gems required for $LABEL.."
 cd $INSTALL_LOCATION$LABEL-"$VERSION"
-gem install bundler -v 2.3.26
-bundle install --deployment
+gem install bundler
+which ruby
+./bin/bundle install
 
 echo "Done with  ruby gems.."
-
-echo "Additional Environment Setting.."
-echo export VERSION="$VERSION" > $INSTALL_LOCATION$LABEL-"$VERSION"/env.sh
-echo source $INSTALL_LOCATION$LABEL-"$VERSION"/bin/activate >> $INSTALL_LOCATION$LABEL-"$VERSION"/env.sh
-echo export GEM_HOME="$INSTALL_LOCATION$LABEL-$VERSION/vendor/bundle" >> $INSTALL_LOCATION$LABEL-"$VERSION"/env.sh 
-echo export GEM_PATH="$INSTALL_LOCATION$LABEL-$VERSION:$INSTALL_LOCATION$LABEL-$VERSION/vendor/bundle:$INSTALL_LOCATION$LABEL-$VERSION/vendor/bundle/ruby/2.3.0/"  >> $INSTALL_LOCATION$LABEL-"$VERSION"/env.sh
-echo export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:$INSTALL_LOCATION$LABEL-"$VERSION"/lib >> $INSTALL_LOCATION$LABEL-"$VERSION"/env.sh
-echo export PATH=\$PATH:$INSTALL_LOCATION$LABEL-"$VERSION"/processing-utils/bin >> $INSTALL_LOCATION$LABEL-"$VERSION"/env.sh
-
 
 echo "Making package..."
 cd ~/build 
