@@ -148,6 +148,8 @@ class Pass
       when %r{^noaa19};               ['noaa19', parse_date(name, "noaa19.%Y%m%d.%H%M")]
       when %r{^jpss1.\d{8}.\d{4}};    ['noaa20', parse_date(name, "jpss1.%Y%m%d.%H%M")]
       when %r{^j1.\d{5}.\d{4}};       ['noaa20', parse_date(name, "j1.%y%j.%H%M")]
+      when %r{^jpss2.\d{8}.\d{4}};    ['noaa21', parse_date(name, "jpss2.%Y%m%d.%H%M")]
+      when %r{^j2.\d{5}.\d{4}};       ['noaa21', parse_date(name, "j2.%y%j.%H%M")]
       when %r{^gcom-w1.\d{8}.\d{4}};  ['gcom-w', parse_date(name, "gcom-w1.%Y%m%d.%H%M")]
     # TODO:  DMSP
       else ['unknown', Time.now]
