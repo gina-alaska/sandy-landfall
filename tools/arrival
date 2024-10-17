@@ -1,0 +1,10 @@
+#!/bin/bash -l
+SCRIPT=$(realpath -s "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")/../
+
+. "$SCRIPTPATH"/bin/activate
+export GEM_PATH="$SCRIPTPATH"/vendor/bundle:$SCRIPTPATH"/vendor/bundle/ruby/3.3.0/"
+export LD_LIBRARY_PATH="$SCRIPTPATH"/lib
+export PATH="$SCRIPTPATH"/bin
+
+"$SCRIPTPATH"/bin/ruby "$SCRIPTPATH"/tools/arrival.rb $@ >> "$SCRIPTPATH"/log/ingest.log 2>&1
