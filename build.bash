@@ -17,7 +17,7 @@ bash Miniforge3-$(uname)-$(uname -m).sh -b -p "${HOME}/conda"
 source "${HOME}/conda/etc/profile.d/conda.sh"
 
 echo "Updating Conda.."
-conda update -n base -c defaults conda
+conda update -y -n base -c defaults conda
 conda install -y -n base conda-libmamba-solver
 conda config --set solver libmamba
 
@@ -35,6 +35,7 @@ export PATH=$PATH:$INSTALL_LOCATION$LABEL-$VERSION/vendor/bundle/bin
 echo "Copying $LABEL to build area.."
 cd ~/build 
 cp -vr Gemfile  Gemfile.lock  README.md VERSION tools $INSTALL_LOCATION$LABEL-"$VERSION"
+mkdir -p $INSTALL_LOCATION$LABEL-"$VERSION"/log
 
 echo "Installing gems required for $LABEL.."
 cd $INSTALL_LOCATION$LABEL-"$VERSION"
@@ -55,4 +56,8 @@ cd ~/build/$LABEL-"$VERSION"
 tar -xf ~/build/"$SB_TARBALL"
 cd ~/build
 cp build_log.txt $LABEL-"$VERSION"/
-tar --bzip2 -cf $LABEL-"$VERSION".tar.bz2 $LABEL-"$VERSION"
+sudo dnf install -y lbzip2 xz
+export BZIP2=" --best "
+tar --use-compress-program=lbzip2 -cf $LABEL-"$VERSION".tar.bz2 $LABEL-"$VERSION"
+tar --xz -cf $LABEL-"$VERSION".tar.xz $LABEL-"$VERSION"
+
