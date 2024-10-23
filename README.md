@@ -19,3 +19,5 @@ cd build
 ./build.bash
 scp (package).bz2 (package).xz ginauser@bigdipper.alaska.edu:/home/ginauser/bs4/gina-packages/nrt
 ```
+
+![alt text](foo?raw=true)
