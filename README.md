@@ -28,7 +28,19 @@ scp (package).bz2 (package).xz ginauser@bigdipper.alaska.edu:/home/ginauser/bs4/
 
 ![alt text](https://github.com/gina-alaska/sandy-landfall/blob/main/images/NRT%20Landfall%20Drawing.png?raw=true)
 
+## Incron
 The incron config should look like this:
 ```
 /home/processing/raw/uaf5/	IN_MOVED_TO	/opt/gina/landfall-(version)/tools/arrival $@/$#
+```
+## Log file
+There is a log file named /opt/gina/landfall-(version)/log/ingest.log that should log all passes as they come in, and any errors that occur.
+
+```
+[processing@nrt-landfall-test-0002 ~]$ tail  /opt/gina/landfall-(version)/log/ingest.log 
+INFO: Done Pass{Satellite:noaa20@2024-10-23T21:55:00+00:00:/home/processing/raw/uaf5//JPSS1.20241023.215516.dat} at 2024-10-23 22:10:08 +0000
+INFO: Starting Pass{Satellite:metop-b@2024-10-23T22:19:00+00:00:/home/processing/raw/uaf5//tp2024297221959.METOP-B.dat} at 2024-10-23 22:23:13 +0000
+INFO: Done Pass{Satellite:metop-b@2024-10-23T22:19:00+00:00:/home/processing/raw/uaf5//tp2024297221959.METOP-B.dat} at 2024-10-23 22:23:14 +0000
+INFO: Starting Pass{Satellite:noaa18@2024-10-23T22:22:00+00:00:/home/processing/raw/uaf5//NOAA18.20241023.222253.hrpt} at 2024-10-23 22:36:47 +0000
+INFO: Done Pass{Satellite:noaa18@2024-10-23T22:22:00+00:00:/home/processing/raw/uaf5//NOAA18.20241023.222253.hrpt} at 2024-10-23 22:36:49 +0000
 ```
