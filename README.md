@@ -20,4 +20,4 @@ cd build
 scp (package).bz2 (package).xz ginauser@bigdipper.alaska.edu:/home/ginauser/bs4/gina-packages/nrt
 ```
 
-![alt text](foo?raw=true)
+![alt text](https://github.com/gina-alaska/sandy-landfall/blob/main/images/NRT%20Landfall%20Drawing.png?raw=true)
