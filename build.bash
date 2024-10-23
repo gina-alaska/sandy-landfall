@@ -12,8 +12,12 @@ echo "$VERSION" > ~/build/VERSION.tmp
 echo "Setting up Conda.."
 rm -rf $INSTALL_LOCATION$LABEL-"$VERSION"
 
+curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh -b -p "${HOME}/conda"
+source "${HOME}/conda/etc/profile.d/conda.sh"
+
 echo "Updating Conda.."
-#conda update -n base -c defaults conda
+conda update -n base -c defaults conda
 conda install -y -n base conda-libmamba-solver
 conda config --set solver libmamba
 
