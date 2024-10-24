@@ -3,42 +3,27 @@ require 'date'
 require 'httparty'
 
 class Pass
-
-  def initialize in_file
-    files=nil
+  def initialize(in_file)
+    files = nil
     @filename = in_file
-    if File.extname(in_file) == ".md5"
+    if File.extname(in_file) == '.md5'
       @md5 = Pathname.new(in_file)
       @id = @md5.basename('.md5').to_s
-      if File.extname(@id) == ".gz"
-          @id = File.basename(@id, ".gz")
-      end
+      @id = File.basename(@id, '.gz') if File.extname(@id) == '.gz'
 
-      if File.extname(@id) == ".dat"
-          @id = File.basename(@id, ".dat")
-      end
+      @id = File.basename(@id, '.dat') if File.extname(@id) == '.dat'
 
+      @id = File.basename(@id, '.zero') if File.extname(@id) == '.zero'
 
-      if File.extname(@id) == ".zero"
-          @id = File.basename(@id, ".zero")
-      end
-
-      files = Dir.glob(File.join(@md5.dirname, "#{@id}*")).reject{|f| File.basename(f) == @md5.basename.to_s }
+      files = Dir.glob(File.join(@md5.dirname, "#{@id}*")).reject { |f| File.basename(f) == @md5.basename.to_s }
     else
       @data_file = Pathname.new(in_file)
-      @id = @data_file.basename().to_s
-      if File.extname(@id) == ".gz"
-          @id = File.basename(@id, ".gz")
-     end
+      @id = @data_file.basename.to_s
+      @id = File.basename(@id, '.gz') if File.extname(@id) == '.gz'
 
-      if File.extname(@id) == ".dat"
-          @id = File.basename(@id, ".dat")
-      end
+      @id = File.basename(@id, '.dat') if File.extname(@id) == '.dat'
 
-      if File.extname(@id) == ".zero"
-          @id = File.basename(@id, ".zero")
-      end
-
+      @id = File.basename(@id, '.zero') if File.extname(@id) == '.zero'
 
       files = Dir.glob(File.join(@data_file.dirname, "#{@id}*"))
     end
@@ -46,9 +31,10 @@ class Pass
     @file = Pathname.new(files.first)
   end
 
-  def to_s 
-	"Pass{#{satellite}:#{@filename}}"
+  def to_s
+    "Pass{#{satellite}:#{@filename}}"
   end
+
   def notify_arrival
     response = HTTParty.post(controller, default_options)
     puts response.body
@@ -57,10 +43,11 @@ class Pass
   def cache!
     path = File.join(cache_path, @file.basename)
     if File.exist?(File.join(cache_path, @file.basename)) && (File.size?(path) == File.size?(@file))
-	puts("INFO: File seems to be already ingested and online.")
-	puts("INFO: \tSize in gluster: #{File.size?(path)}")
- 	puts("INFO: \tSize on landfall: #{File.size?(@file)}")
-    	return false 
+      puts('INFO: File seems to be already ingested and online.')
+      puts("INFO: \tSize in gluster: #{File.size?(path)}")
+      puts("INFO: \tSize on landfall: #{File.size?(@file)}")
+      puts("INFO: \tPath on Gluster: #{@file}")
+      return false
     end
     # Create directories unless they exist
     # Delete any files if they exist?  Or fail if it exists
@@ -68,9 +55,7 @@ class Pass
     # Return True if the copy is successful
     FileUtils.mkdir_p(cache_path) unless File.exist? cache_path
     FileUtils.copy @file, cache_path
-    if satellite.name == "metop-b"
-      system("gunzip #{cache_path}/#{@file.basename.to_s}")
-    end
+    system("gunzip #{cache_path}/#{@file.basename}") if satellite.name == 'metop-b'
     # TODO:  Verify copied file matches md5
     true
   end
@@ -80,6 +65,7 @@ class Pass
   end
 
   private
+
   def default_options
     {
       body: {
@@ -114,44 +100,44 @@ class Pass
   end
 
   def month
-    satellite.acquired_at.month.to_s.rjust(2,'0')
+    satellite.acquired_at.month.to_s.rjust(2, '0')
   end
 
   class Satellite
-    attr_reader :name
-    attr_reader :acquired_at
+    attr_reader :name, :acquired_at
 
-    def initialize pattern
+    def initialize(pattern)
       @name, @acquired_at = parse_name(pattern)
     end
 
     def to_s
-	"Satellite:#{@name}@#{@acquired_at.to_s}"
+      "Satellite:#{@name}@#{@acquired_at}"
     end
 
     private
+
     def parse_name(filename)
       name = filename.downcase
       case name
-      when %r{^npp.\d{5}.\d{4}};      ['snpp', parse_date(name, "npp.%y%j.%H%M")]
-      when %r{^npp.\d{8}.\d{4}};      ['snpp', parse_date(name, "npp.%Y%m%d.%H%M")]
-      when %r{^a1.\d{5}.\d{4}};       ['aqua', parse_date(name, "a1.%y%j.%H%M")]
-      when %r{^aqua.\d{8}.\d{4}};     ['aqua', parse_date(name, "aqua.%Y%m%d.%H%M")]
-      when %r{^t1.\d{5}.\d{4}};       ['terra', parse_date(name, "t1.%y%j.%H%M")]
-      when %r{^terra.\d{8}.\d{4}};    ['terra', parse_date(name, "terra.%Y%m%d.%H%M")]
-      when %r{^tp\d{13}.metop-b}; ['metop-b', parse_date(name, "tp%Y%j%H%M")]
-      when %r{^tp\d{13}.metop-c}; ['metop-c', parse_date(name, "tp%Y%j%H%M")]
-      when %r{^n15};                  ['noaa15', parse_date(name, "n15.%y%j.%H%M")]
-      when %r{^n18};                  ['noaa18', parse_date(name, "n18.%y%j.%H%M")]
-      when %r{^n19};                  ['noaa19', parse_date(name, "n19.%y%j.%H%M")]
-      when %r{^noaa18};               ['noaa18', parse_date(name, "noaa18.%Y%m%d.%H%M")]
-      when %r{^noaa19};               ['noaa19', parse_date(name, "noaa19.%Y%m%d.%H%M")]
-      when %r{^jpss1.\d{8}.\d{4}};    ['noaa20', parse_date(name, "jpss1.%Y%m%d.%H%M")]
-      when %r{^j1.\d{5}.\d{4}};       ['noaa20', parse_date(name, "j1.%y%j.%H%M")]
-      when %r{^jpss2.\d{8}.\d{4}};    ['noaa21', parse_date(name, "jpss2.%Y%m%d.%H%M")]
-      when %r{^j2.\d{5}.\d{4}};       ['noaa21', parse_date(name, "j2.%y%j.%H%M")]
-      when %r{^gcom-w1.\d{8}.\d{4}};  ['gcom-w', parse_date(name, "gcom-w1.%Y%m%d.%H%M")]
-    # TODO:  DMSP
+      when /^npp.\d{5}.\d{4}/ then      ['snpp', parse_date(name, 'npp.%y%j.%H%M')]
+      when /^npp.\d{8}.\d{4}/ then      ['snpp', parse_date(name, 'npp.%Y%m%d.%H%M')]
+      when /^a1.\d{5}.\d{4}/ then       ['aqua', parse_date(name, 'a1.%y%j.%H%M')]
+      when /^aqua.\d{8}.\d{4}/ then     ['aqua', parse_date(name, 'aqua.%Y%m%d.%H%M')]
+      when /^t1.\d{5}.\d{4}/ then       ['terra', parse_date(name, 't1.%y%j.%H%M')]
+      when /^terra.\d{8}.\d{4}/ then    ['terra', parse_date(name, 'terra.%Y%m%d.%H%M')]
+      when /^tp\d{13}.metop-b/ then ['metop-b', parse_date(name, 'tp%Y%j%H%M')]
+      when /^tp\d{13}.metop-c/ then ['metop-c', parse_date(name, 'tp%Y%j%H%M')]
+      when /^n15/ then                  ['noaa15', parse_date(name, 'n15.%y%j.%H%M')]
+      when /^n18/ then                  ['noaa18', parse_date(name, 'n18.%y%j.%H%M')]
+      when /^n19/ then                  ['noaa19', parse_date(name, 'n19.%y%j.%H%M')]
+      when /^noaa18/ then               ['noaa18', parse_date(name, 'noaa18.%Y%m%d.%H%M')]
+      when /^noaa19/ then               ['noaa19', parse_date(name, 'noaa19.%Y%m%d.%H%M')]
+      when /^jpss1.\d{8}.\d{4}/ then    ['noaa20', parse_date(name, 'jpss1.%Y%m%d.%H%M')]
+      when /^j1.\d{5}.\d{4}/ then       ['noaa20', parse_date(name, 'j1.%y%j.%H%M')]
+      when /^jpss2.\d{8}.\d{4}/ then    ['noaa21', parse_date(name, 'jpss2.%Y%m%d.%H%M')]
+      when /^j2.\d{5}.\d{4}/ then       ['noaa21', parse_date(name, 'j2.%y%j.%H%M')]
+      when /^gcom-w1.\d{8}.\d{4}/ then  ['gcom-w', parse_date(name, 'gcom-w1.%Y%m%d.%H%M')]
+      # TODO:  DMSP
       else ['unknown', Time.now]
       end
     end
@@ -162,16 +148,16 @@ class Pass
   end
 end
 
-skip = [".md5", ".gz"]
+skip = ['.md5', '.gz']
 
-unless skip.member?(File.extname(ARGV.first)) 
-	pass = Pass.new(ARGV.first)
-	puts("INFO: Starting #{pass} at #{Time.now}")
-	unless pass.satellite.name == 'unknown'
-		pass.notify_arrival if pass.cache!\
-	else
-		puts("INFO: SKipping - unknown platform.")
-        end
+unless skip.member?(File.extname(ARGV.first))
+  pass = Pass.new(ARGV.first)
+  puts("INFO: Starting #{pass} at #{Time.now}")
+  if pass.satellite.name == 'unknown'
+    puts('INFO: SKipping - unknown platform.')
+  elsif pass.cache!
+    pass.notify_arrival
+  end
 
-	puts("INFO: Done #{pass} at #{Time.now}")
+  puts("INFO: Done #{pass} at #{Time.now}")
 end
