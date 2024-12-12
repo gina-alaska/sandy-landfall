@@ -11,7 +11,7 @@ jobs:
             - name: install prerecs
               run: |
                  dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-                 dnf -y update && dnf -y install openssh-clients wget bzip2 tar make xv lbzip2 
+                 dnf -y update && dnf -y install openssh-clients wget bzip2 tar make xz lbzip2 
             - name: Add SSH key
               env:
                   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
