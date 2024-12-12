@@ -7,7 +7,7 @@ LABEL="landfall"
 
 echo "Version is " "$VERSION"
 
-echo "$VERSION" > ~/build/VERSION.tmp
+echo "$VERSION" > /__w/sandy-landfall/sandy-landfall/VERSION.tmp
 
 echo "Setting up Conda.."
 rm -rf $INSTALL_LOCATION$LABEL-"$VERSION"
@@ -46,17 +46,16 @@ which ruby
 echo "Done with  ruby gems.."
 
 echo "Making package..."
-cd ~/build 
+cd /__w/sandy-landfall/sandy-landfall/
 SB_TARBALL="$LABEL-$VERSION.pre.tar.gz"
 rm -f "$SB_TARBALL"
 conda pack --ignore-editable-packages --ignore-missing-files -q --n-threads -1 --compress-level 0 -o "$SB_TARBALL"
-rm -rf ~/build/$LABEL-"$VERSION"
-mkdir  ~/build/$LABEL-"$VERSION"
-cd ~/build/$LABEL-"$VERSION"
-tar -xf ~/build/"$SB_TARBALL"
-cd ~/build
-cp build_log.txt $LABEL-"$VERSION"/
-sudo dnf install -y lbzip2 xz
+rm -rf /__w/sandy-landfall/sandy-landfall/$LABEL-"$VERSION"
+mkdir  /__w/sandy-landfall/sandy-landfall/$LABEL-"$VERSION"
+cd /__w/sandy-landfall/sandy-landfall/$LABEL-"$VERSION"
+tar -xf /__w/sandy-landfall/sandy-landfall/"$SB_TARBALL"
+cd /__w/sandy-landfall/sandy-landfall/
+dnf install -y lbzip2 xz
 export BZIP2=" --best "
 tar --use-compress-program=lbzip2 -cf $LABEL-"$VERSION".tar.bz2 $LABEL-"$VERSION"
 tar --xz -cf $LABEL-"$VERSION".tar.xz $LABEL-"$VERSION"
