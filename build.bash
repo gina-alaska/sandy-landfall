@@ -1,7 +1,7 @@
 #!/bin/bash -l
 cd || exit 
 
-VERSION=$(cat ~/build/VERSION)-$(date +"%Y%m%d%H%M%S")
+VERSION=$(cat /__w/sandy-landfall/sandy-landfall/VERSION)-$(date +"%Y%m%d%H%M%S")
 INSTALL_LOCATION="/opt/gina/"
 LABEL="landfall"
 
@@ -33,7 +33,7 @@ export GEM_PATH="$INSTALL_LOCATION$LABEL-$VERSION:$INSTALL_LOCATION$LABEL-$VERSI
 export PATH=$PATH:$INSTALL_LOCATION$LABEL-$VERSION/vendor/bundle/bin
 
 echo "Copying $LABEL to build area.."
-cd ~/build 
+cd /__w/sandy-landfall/sandy-landfall
 cp -vr Gemfile  Gemfile.lock  README.md VERSION tools $INSTALL_LOCATION$LABEL-"$VERSION"
 mkdir -p $INSTALL_LOCATION$LABEL-"$VERSION"/log
 
