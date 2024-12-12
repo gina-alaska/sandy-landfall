@@ -8,7 +8,8 @@ jobs:
         steps:
             - name: Checkout Code
               uses: actions/checkout@v4
-              path: /root/build
+              with: 
+                 path: /root/build
             - name: install prerecs
               run: |
                  dnf -y update && dnf -y install openssh-clients
