@@ -8,6 +8,7 @@ jobs:
         steps:
             - name: Checkout Code
               uses: actions/checkout@v4
+              path: /root/build
             - name: install prerecs
               run: |
                  dnf -y update && dnf -y install openssh-clients
@@ -22,9 +23,19 @@ jobs:
                   ssh-add /home/runner/.ssh/github_actions
                   ssh-add -L
                   pwd
-            - name: Build and deploy
+            - name Install Conda
               env:
                   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
               run: |
-                  pwd
+                  mkdir -p $HOME/anaconda
+                  wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/anaconda/miniconda.sh
+                  bash ~/anaconda/miniconda.sh -b -u -p ~/anaconda
+                  ~/anaconda/bin/conda init bash
+            - name Build
+              env:
+                  SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+              run: |
+                  mkdir -p /opt/gina
+                  bash -l /root/build/build.bash
+            
                 
