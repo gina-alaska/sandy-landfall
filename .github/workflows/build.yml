@@ -23,7 +23,7 @@ jobs:
                   ssh-add /home/runner/.ssh/github_actions
                   ssh-add -L
                   pwd
-            - name Install Conda
+            - name: Install Conda
               env:
                   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
               run: |
@@ -31,7 +31,7 @@ jobs:
                   wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/anaconda/miniconda.sh
                   bash ~/anaconda/miniconda.sh -b -u -p ~/anaconda
                   ~/anaconda/bin/conda init bash
-            - name Build
+            - name: Build
               env:
                   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
               run: |
