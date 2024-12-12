@@ -35,6 +35,6 @@ jobs:
                   SSH_AUTH_SOCK: /tmp/ssh_agent.sock
               run: |
                   mkdir -p /opt/gina
-                  bash -l /root/build/build.bash
+                  bash -l ./build.bash
             
                 
