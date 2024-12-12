@@ -37,5 +37,11 @@ jobs:
               run: |
                   mkdir -p /opt/gina
                   bash -l ./build.bash
-            
+            - name: publish
+              env:
+                  SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+              run: |
+                  sha256sum *.bz2 *.xz
+                  scp -i /home/runner/.ssh/github_actions -J jecable@gateway.gina.alaska.edu *.bz2 *.xz ginauser@bigdipper.alaska.edu:/home/ginauser/bs4/gina-packages/nrt 
+                  
                 
