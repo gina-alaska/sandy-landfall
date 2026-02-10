@@ -137,6 +137,7 @@ class Pass
       when /^jpss2.\d{8}.\d{4}/ then    ['noaa21', parse_date(name, 'jpss2.%Y%m%d.%H%M')]
       when /^j2.\d{5}.\d{4}/ then       ['noaa21', parse_date(name, 'j2.%y%j.%H%M')]
       when /^gcom-w1.\d{8}.\d{4}/ then  ['gcom-w', parse_date(name, 'gcom-w1.%Y%m%d.%H%M')]
+      when /^aws1.\d{8}.\d{4}/ then     ['aws', parse_date(name, 'aws1.%Y%m%d.%H%M')]
       # TODO:  DMSP
       else ['unknown', Time.now]
       end
