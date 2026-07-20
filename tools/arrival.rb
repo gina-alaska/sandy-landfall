@@ -138,6 +138,7 @@ class Pass
       when /^j2.\d{5}.\d{4}/ then       ['noaa21', parse_date(name, 'j2.%y%j.%H%M')]
       when /^gcom-w1.\d{8}.\d{4}/ then  ['gcom-w', parse_date(name, 'gcom-w1.%Y%m%d.%H%M')]
       when /^aws1.\d{8}.\d{4}/ then     ['aws', parse_date(name, 'aws1.%Y%m%d.%H%M')]
+      when /^metop-sga1\.\d{8}\.\d{6}/ then ['metop-sga1', parse_date(name, 'metop-sga1.%Y%m%d.%H%M%S')]
       # TODO:  DMSP
       else ['unknown', Time.now]
       end
